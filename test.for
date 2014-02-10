@@ -37,11 +37,11 @@ C     ==================================
       SUBROUTINE PRINTHEADER()
 C
       WRITE(6, 400) 'COUNT' 
-  400 FORMAT(A5 $)
+  400 FORMAT(A5, $)
       WRITE(6, 410) 'A', 'B', 'C'
-  410 FORMAT(3A15 $)
+  410 FORMAT(3A15, $)
       WRITE(6, 420) 'X1 REAL', 'X1 IMG', 'X2 REAL', 'X2 IMG'
-  420 FORMAT(5A15 $)
+  420 FORMAT(5A15, $)
 C     
       RETURN
       END     
@@ -53,7 +53,7 @@ C     =================================
       SUBROUTINE PRINTBLANK()
 C
       WRITE(6, 450) ''
-  450 FORMAT(A15 $)
+  450 FORMAT(A15, $)
 C
       RETURN
       END
@@ -65,7 +65,7 @@ C     ================================
       SUBROUTINE PRINTREAL(RVAL)
 C
       WRITE(6, 500) RVAL 
-  500 FORMAT(1PE15.4 $)
+  500 FORMAT(1PE15.4, $)
 C
       RETURN
       END
@@ -77,7 +77,7 @@ C     =================================
       SUBROUTINE PRINTCOUNT(ICOUNT)
 C
       WRITE(6, 550) ICOUNT
-  550 FORMAT(I4, ':' $)
+  550 FORMAT(I4, ':', $)
 C
       RETURN
       END
