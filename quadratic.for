@@ -1,5 +1,5 @@
 C
-C     TEST PROGRAM
+C     STACHE OVERFLOW FORTRAN PROGRAM
 C
       REAL RA, RB, RC
       INTEGER I 
@@ -131,13 +131,23 @@ C     ================================
 C
 C     NEGATIVE
    10 R1R = R
-      CALL PRINTREAL(R1R) 
-      R1I = SQRT((0.0-1.0)*(RB*RB-4*RA*RC))/(2*RA)
+      IF(R) 232, 233, 232
+  233 CALL PRINTBLANK()
+      GOTO 888
+  232 CALL PRINTREAL(R1R)
+C
+  888 R1I = SQRT((0.0-1.0)*(RB*RB-4*RA*RC))/(2*RA)
       CALL PRINTREAL(R1I)
+C
       R2R = R
-      CALL PRINTREAL(R2R)
-      R2I = 0.0-R1I
+      IF(R) 332, 333, 332
+  333 CALL PRINTBLANK()
+      GOTO 999
+  332 CALL PRINTREAL(R2R)
+C
+  999 R2I = 0.0-R1I
       CALL PRINTREAL(R2I)
+C
       RETURN
 C
 C     ZERO
