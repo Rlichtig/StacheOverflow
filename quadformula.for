@@ -2,22 +2,31 @@ C
 C     TEST PROGRAM
 C
       REAL RA, RB, RC, R1R, R1I, R2R, R2I
+      CALL PRINTHEADER()
+C
+	  DO 500 I=1,1000,1
 C
       CALL READREALS(RA, RB, RC)
+C     
+C	  IF (RA.NE.0) GOTO 510
 C
-      CALL PRINTHEADER()
       CALL PRINTNEWLINE()
 C
-      CALL PRINTCOUNT(1)
+      CALL PRINTCOUNT(I)
       CALL PRINTREAL(RA)
       CALL PRINTREAL(RB)
       CALL PRINTREAL(RC)
-      CALL PRINTNEWLINE()
+C	  
+	  CALL QUADFORM(RA, RB, RC)
 C
       CALL PRINTNEWLINE()
+C
+  500 CONTINUE
+C
+  510 CALL PRINTNEWLINE()
       CALL PRINTFOOTER(20)
       END
-C
+C	  
 C     ===== SUBROUTINE READREALS =====
 C     THIS ROUTINE WILL BE USED TO 
 C     READ IN THREE REAL VALUES
@@ -70,6 +79,20 @@ C
       RETURN
       END
 C
+C     ===== SUBROUTINE PRINTRESULT =====
+C     THIS ROUTINE WILL BE USED TO
+C     CALCULATE AND PRINT THE QUADRATIC
+C	  FORMULA
+C     ================================
+      SUBROUTINE PRINTRESULT(RVAL)
+C
+	  
+      WRITE(6, 500) RVAL 
+  500 FORMAT(1PE15.4, $)
+C
+      RETURN
+      END
+C
 C     ===== SUBROUTINE PRINTCOUNT =====
 C     THIS ROUTINE WILL BE USED TO      
 C     PRINT OUT THE CURRENT COUNT
@@ -107,3 +130,58 @@ C
 C
       RETURN
       END
+      
+C     ===== SUBROUTINE QUADFORM ======
+C     THIS ROUTINE WILL BE USED TO 
+C     COMPUTE THE QUADRATIC FORMULA
+C     ================================    
+      SUBROUTINE QUADFORM(RA, RB, RC)
+      R = 0.0-0.5*RB/RA
+	  DIS1 = SQRT(RB*RB-4*RA*RC)
+      RPLUS = 0.5*(DIS1-RB)/RA
+      RMINUS = 0.5*(0.0-(RB+DIS1))/RA
+      IF (RB*RB-4*RA*RC) 10, 20, 30
+C
+C     NEGATIVE
+  10  R1R = R
+      R2R = R
+      R1I = SQRT(((0.0-RB*RB)-4*RA*RB)/2*RA)
+      R2I = 0.0-R1I
+      
+      CALL PRINTREAL(R1R)
+      CALL PRINTREAL(R1I)
+      CALL PRINTREAL(R2R)
+      CALL PRINTREAL(R2I)
+C 
+	  RETURN
+C
+C     ZERO
+  20  R1R = R
+      R2R = R
+      R1I = 0.0
+      R2I = 0.0
+C 
+      CALL PRINTREAL(R1R)
+      CALL PRINTBLANK()
+      CALL PRINTREAL(R2R)
+      CALL PRINTBLANK()
+C
+	  RETURN
+C    
+C     POSITIVE
+  30  R1R = RPLUS*DIS1
+      R2R = RMINUS*DIS1
+      R1I = 0.0
+      R2I = 0.0
+C
+      CALL PRINTREAL(R1R)
+      CALL PRINTBLANK()
+      CALL PRINTREAL(R2R)
+      CALL PRINTBLANK()    
+C
+	  RETURN
+C
+      RETURN
+      END 
+      
+      
