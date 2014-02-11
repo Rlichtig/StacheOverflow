@@ -131,41 +131,33 @@ C     ================================
 C
 C     NEGATIVE
    10 R1R = R
-      WRITE(6, 500) R1R
-  500 FORMAT(1PE15.4 $)
+      CALL PRINTREAL(R1R) 
       R1I = SQRT((0.0-1.0)*(RB*RB-4*RA*RC))/2*RA
-      WRITE(6, 501) R1I
-  501 FORMAT(1PE15.4 $)
+      CALL PRINTREAL(R1I)
       R2R = R
-      WRITE(6, 502) R2R
-  502 FORMAT(1PE15.4 $)
+      CALL PRINTREAL(R2R)
       R2I = 0.0-R1I
-      WRITE(6, 503) R2I
-  503 FORMAT(1PE15.4 $)
+      CALL PRINTREAL(R2I)
       RETURN
 C
 C     ZERO
    20 R1R = R
-      WRITE(6, 504) R1R
-  504 FORMAT(1PE15.4 $)
+      CALL PRINTREAL(R1R)
       R1I = 0.0
       CALL PRINTBLANK()
       R2R = R
-      WRITE(6, 506) R2R
-  506 FORMAT(1PE15.4 $)	
+      CALL PRINTREAL(R2R)
       R2I = 0.0
       CALL PRINTBLANK()	
       RETURN
 C
 C     POSITIVE
    30 R1R = RPLUS
-      WRITE(6, 508) R1R
-  508 FORMAT(1PE15.4 $)
+      CALL PRINTREAL(R1R)
       R1I = 0.0
       CALL PRINTBLANK()
       R2R = RMINUS
-      WRITE(6, 510) R2R
-  510 FORMAT(1PE15.4 $)
+      CALL PRINTREAL(R2R)
       R2I = 0.0
       CALL PRINTBLANK()
       RETURN
