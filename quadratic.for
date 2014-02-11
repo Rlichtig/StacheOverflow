@@ -132,7 +132,7 @@ C
 C     NEGATIVE
    10 R1R = R
       CALL PRINTREAL(R1R) 
-      R1I = SQRT((0.0-1.0)*(RB*RB-4*RA*RC))/2*RA
+      R1I = SQRT((0.0-1.0)*(RB*RB-4*RA*RC))/(2*RA)
       CALL PRINTREAL(R1I)
       R2R = R
       CALL PRINTREAL(R2R)
