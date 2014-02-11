@@ -1,14 +1,15 @@
 C
 C     TEST PROGRAM
 C
-      REAL RA, RB, RC, R1R, R1I, R2R, R2I
+      REAL RA, RB, RC, R1R, R1I, R2R, R2I, DO_END
+C
       CALL PRINTHEADER()
 C
-	  DO 500 I=1,1000,1
+      DO 500 I=1,99999,1
 C
       CALL READREALS(RA, RB, RC)
-C     
-C	  IF (RA.NE.0) GOTO 510
+C
+      IF (RA.EQ.0) GOTO 510
 C
       CALL PRINTNEWLINE()
 C
@@ -19,12 +20,10 @@ C
 C	  
 	  CALL QUADFORM(RA, RB, RC)
 C
-      CALL PRINTNEWLINE()
-C
   500 CONTINUE
 C
   510 CALL PRINTNEWLINE()
-      CALL PRINTFOOTER(20)
+      CALL PRINTFOOTER(I-1)
       END
 C	  
 C     ===== SUBROUTINE READREALS =====
@@ -46,11 +45,11 @@ C     ==================================
       SUBROUTINE PRINTHEADER()
 C
       WRITE(6, 400) 'COUNT' 
-  400 FORMAT(A5, $)
+  400 FORMAT(A5 $)
       WRITE(6, 410) 'A', 'B', 'C'
-  410 FORMAT(3A15, $)
+  410 FORMAT(3A15 $)
       WRITE(6, 420) 'X1 REAL', 'X1 IMG', 'X2 REAL', 'X2 IMG'
-  420 FORMAT(5A15, $)
+  420 FORMAT(5A15 $)
 C     
       RETURN
       END     
@@ -62,7 +61,7 @@ C     =================================
       SUBROUTINE PRINTBLANK()
 C
       WRITE(6, 450) ''
-  450 FORMAT(A15, $)
+  450 FORMAT(A15 $)
 C
       RETURN
       END
@@ -74,7 +73,7 @@ C     ================================
       SUBROUTINE PRINTREAL(RVAL)
 C
       WRITE(6, 500) RVAL 
-  500 FORMAT(1PE15.4, $)
+  500 FORMAT(1PE15.4 $)
 C
       RETURN
       END
@@ -88,7 +87,7 @@ C     ================================
 C
 	  
       WRITE(6, 500) RVAL 
-  500 FORMAT(1PE15.4, $)
+  500 FORMAT(1PE15.4 $)
 C
       RETURN
       END
@@ -100,7 +99,7 @@ C     =================================
       SUBROUTINE PRINTCOUNT(ICOUNT)
 C
       WRITE(6, 550) ICOUNT
-  550 FORMAT(I4, ':', $)
+  550 FORMAT(I4, ':' $)
 C
       RETURN
       END
@@ -130,58 +129,60 @@ C
 C
       RETURN
       END
-      
 C     ===== SUBROUTINE QUADFORM ======
 C     THIS ROUTINE WILL BE USED TO 
 C     COMPUTE THE QUADRATIC FORMULA
 C     ================================    
       SUBROUTINE QUADFORM(RA, RB, RC)
+	  
+	  REAL R, DIS1, RPLUS, RMINUS
+	  
       R = 0.0-0.5*RB/RA
 	  DIS1 = SQRT(RB*RB-4*RA*RC)
-      RPLUS = 0.5*(DIS1-RB)/RA
+      RPLUS = 0.5*((DIS1-RB)/RA)
       RMINUS = 0.5*(0.0-(RB+DIS1))/RA
       IF (RB*RB-4*RA*RC) 10, 20, 30
 C
 C     NEGATIVE
   10  R1R = R
+      WRITE(6, 500) R1R 
+  500 FORMAT(1PE15.4 $)
+      R1I = SQRT((0.0-1.0)*(RB*RB-4*RA*RC))/2*RA
+	  WRITE(6, 501) R1I
+  501 FORMAT(1PE15.4 $)
       R2R = R
-      R1I = SQRT(((0.0-RB*RB)-4*RA*RB)/2*RA)
+	  WRITE(6, 502) R2R 
+  502 FORMAT(1PE15.4 $)
       R2I = 0.0-R1I
-      
-      CALL PRINTREAL(R1R)
-      CALL PRINTREAL(R1I)
-      CALL PRINTREAL(R2R)
-      CALL PRINTREAL(R2I)
-C 
+	  WRITE(6, 503) R2I 
+  503 FORMAT(1PE15.4 $)
 	  RETURN
 C
 C     ZERO
   20  R1R = R
-      R2R = R
+      WRITE(6, 504) R1R 
+  504 FORMAT(1PE15.4 $)
       R1I = 0.0
+      CALL PRINTBLANK()  
+      R2R = R
+      WRITE(6, 506) R2R 
+  506 FORMAT(1PE15.4 $)	  
       R2I = 0.0
-C 
-      CALL PRINTREAL(R1R)
-      CALL PRINTBLANK()
-      CALL PRINTREAL(R2R)
-      CALL PRINTBLANK()
-C
+      CALL PRINTBLANK()	  
 	  RETURN
 C    
 C     POSITIVE
-  30  R1R = RPLUS*DIS1
-      R2R = RMINUS*DIS1
+  30  R1R = RPLUS
+	  WRITE(6, 508) R1R 
+  508 FORMAT(1PE15.4 $)
       R1I = 0.0
+	  CALL PRINTBLANK()
+      R2R = RMINUS
+	  WRITE(6, 510) R2R
+  510 FORMAT(1PE15.4 $)
       R2I = 0.0
-C
-      CALL PRINTREAL(R1R)
-      CALL PRINTBLANK()
-      CALL PRINTREAL(R2R)
-      CALL PRINTBLANK()    
-C
+	  CALL PRINTBLANK()
 	  RETURN
 C
       RETURN
       END 
-      
-      
