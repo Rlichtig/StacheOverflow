@@ -17,6 +17,7 @@ C
       CALL PRINTREAL(RA)
       CALL PRINTREAL(RB)
       CALL PRINTREAL(RC)
+      CALL QUADFORM(RA,RB,RC) 
       CALL PRINTNEWLINE()
 C
     5 CONTINUE
@@ -115,3 +116,60 @@ C
 C
       RETURN
       END
+C
+C     ===== SUBROUTINE QUADFORM ======
+C     THIS ROUTINE WILL BE USED TO
+C     COMPUTE THE QUADRATIC FORMULA
+C     ================================
+      SUBROUTINE QUADFORM(RA, RB, RC)
+      REAL R, DIS1, RPLUS, RMINUS
+      R = 0.0-0.5*RB/RA
+      DIS1 = SQRT(RB*RB-4*RA*RC)
+      RPLUS = 0.5*((DIS1-RB)/RA)
+      RMINUS = 0.5*(0.0-(RB+DIS1))/RA
+      IF (RB*RB-4*RA*RC) 10, 20, 30
+C
+C     NEGATIVE
+   10 R1R = R
+      WRITE(6, 500) R1R
+  500 FORMAT(1PE15.4 $)
+      R1I = SQRT((0.0-1.0)*(RB*RB-4*RA*RC))/2*RA
+      WRITE(6, 501) R1I
+  501 FORMAT(1PE15.4 $)
+      R2R = R
+      WRITE(6, 502) R2R
+  502 FORMAT(1PE15.4 $)
+      R2I = 0.0-R1I
+      WRITE(6, 503) R2I
+  503 FORMAT(1PE15.4 $)
+      RETURN
+C
+C     ZERO
+   20 R1R = R
+      WRITE(6, 504) R1R
+  504 FORMAT(1PE15.4 $)
+      R1I = 0.0
+      CALL PRINTBLANK()
+      R2R = R
+      WRITE(6, 506) R2R
+  506 FORMAT(1PE15.4 $)	
+      R2I = 0.0
+      CALL PRINTBLANK()	
+      RETURN
+C
+C     POSITIVE
+   30 R1R = RPLUS
+      WRITE(6, 508) R1R
+  508 FORMAT(1PE15.4 $)
+      R1I = 0.0
+      CALL PRINTBLANK()
+      R2R = RMINUS
+      WRITE(6, 510) R2R
+  510 FORMAT(1PE15.4 $)
+      R2I = 0.0
+      CALL PRINTBLANK()
+      RETURN
+C
+      RETURN
+      END
+C
